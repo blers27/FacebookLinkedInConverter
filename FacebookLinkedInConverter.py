@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import re
 
 class FacebookCrawler:
-    friends_url = 'https://www.facebook.com/bsamarxhiu/friends'
+    friends_url = 'https://www.facebook.com/USERNAME/friends'
 
     #launch browser and login
     def __init__(self, login, password):
