@@ -14,7 +14,7 @@ class FacebookCrawler:
 
         self.login(login, password)
 		
-        self.get_friends()
+        #self.get_friends()
 
     def login(self, login, password):
 		friends_url = f'https://www.facebook.com/{login}/friends'
