@@ -47,11 +47,11 @@ class FacebookCrawler:
 
     #need to filter raw list
     def friend_filter(self):
-        self.driver.quit()
-        unfiltered = [n for n in self.get_friends() if n]
-        nonum = re.compile(r'^[^0-9]')
-        #removes elements that "friends" that start with a number
-        return [n for n in unfiltered if nonum.match(n)]
+		unfiltered = [n for n in self.get_friends() if n]
+		self.driver.quit()
+		nonum = re.compile(r'^[^0-9]')
+		#removes elements that "friends" that start with a number
+		return [n for n in unfiltered if nonum.match(n)]
 
 
 class LinkedInLookup:
@@ -60,7 +60,7 @@ class LinkedInLookup:
     #launch browser and login
     def __init__(self, login, password):
         self.driver = webdriver.Chrome()
-        self.wait = WebDriverWait(self.driver, 10)
+        self.wait = WebDriverWait(self.driver, 15)
         self.login(login, password)
 
     def login(self, login, password):
