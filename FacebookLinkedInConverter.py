@@ -6,18 +6,19 @@ from selenium.webdriver.support import expected_conditions as EC
 import re
 
 class FacebookCrawler:
-    friends_url = 'https://www.facebook.com/USERNAME/friends'
-
+   
     #launch browser and login
     def __init__(self, login, password):
         self.driver = webdriver.Chrome()
         self.wait = WebDriverWait(self.driver, 10)
 
         self.login(login, password)
-        #self.get_friends()
+		
+        self.get_friends()
 
     def login(self, login, password):
-        self.driver.get(self.friends_url)
+		friends_url = f'https://www.facebook.com/{login}/friends'
+        self.driver.get(friends_url)
 
         # wait for the login page to load
         self.wait.until(EC.visibility_of_element_located((By.ID, "email")))
