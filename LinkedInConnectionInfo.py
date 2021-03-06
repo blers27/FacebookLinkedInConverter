@@ -37,16 +37,17 @@ class ConnectionInfo:
         self.driver.find_element_by_class_name(
             'sign-in-form__submit-button').click()
 
-    # searches friend by using parameter embedded into the URL
     def getConnectionInfo(self):
         self.driver.get(
             'https://www.linkedin.com/mynetwork/invite-connect/connections/')
 
         # continuous scroll until no more new connections loaded
         while True:
+            # store page length as variable
             last_height = self.driver.execute_script(
                 "return document.body.scrollHeight")
 
+            # scroll down to bottom of page. LinkedIn gets stuck sometimes, so scroll up then back down.
             self.driver.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight);")
             sleep(1)
@@ -55,7 +56,7 @@ class ConnectionInfo:
             self.driver.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight);")
 
-            sleep(5)
+            sleep(3)
 
             new_height = self.driver.execute_script(
                 "return document.body.scrollHeight")
@@ -63,8 +64,8 @@ class ConnectionInfo:
                 break
             last_height = new_height
 
+        # parse names and occupation titles using beautifulsoup
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-
         names = [name.text.strip() for name in soup.findAll(
             class_='mn-connection-card__name t-16 t-black t-bold')]
         occupations = [occ.text.strip() for occ in soup.findAll(
@@ -83,5 +84,6 @@ if __name__ == '__main__':
 
     login.browserQuit()
 
+    # add to dataframe and save as csv
     df = pd.DataFrame(connections, columns=['Name', 'Occupation'])
     df.to_csv('Connections.csv')
